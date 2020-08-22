@@ -24,11 +24,17 @@ class DropRows(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        # Primeiro realizamos a cópia do dataframe 'X' de entrada
+        # Realiza a cópia do dataframe 'X' de entrada
         data = X.copy()
+      
+        # Define condição para remover linhas
+        condition = (((data['NOTA_DE'] == 0) & (data['REPROVACOES_DE'] == 0))
+         | ((data['NOTA_MF'] == 0) & (data['REPROVACOES_MF'] == 0))
+         | ((data['NOTA_GO'] == 0) & (data['REPROVACOES_GO'] == 0))
+         | ((data['NOTA_EM'] == 0) & (data['REPROVACOES_EM'] == 0)))
+
+        # Separa as linhas indesejadas
+        rm_index = data[condition].index.values
         
-        # Separamos as linhas indesejadas
-        rm_index = data[self.condition].index.values
-        
-        # Retornamos um novo dataframe sem as linhas indesejadas        
+        # Retorna um novo dataframe sem as linhas indesejadas        
         return data.drop(labels=rm_index, axis='index')
