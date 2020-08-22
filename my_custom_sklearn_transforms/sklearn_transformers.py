@@ -17,9 +17,6 @@ class DropColumns(BaseEstimator, TransformerMixin):
 
 # All sklearn Transforms must have the `transform` and `fit` methods
 class DropRows(BaseEstimator, TransformerMixin):
-    def __init__(self, condition_to_drop):
-        self.condition = condition_to_drop
-
     def fit(self, X, y=None):
         return self
 
